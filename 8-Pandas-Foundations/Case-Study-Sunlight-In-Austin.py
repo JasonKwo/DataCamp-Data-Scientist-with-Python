@@ -153,3 +153,56 @@ overcast_daily_max_mean = overcast_daily_max.mean()
 print(sunny_daily_max_mean - overcast_daily_max_mean)
 
 # result: dry_bulb_faren is on average 6.5 degrees hotter on sunny days than overcast days
+
+
+#------------------------------------------------------------------------------------------------------------------------
+
+# Time for some visual EDA
+
+# check correlation between visibility and temp
+# Import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
+
+# Select the visibility and dry_bulb_faren columns and resample them: weekly_mean
+weekly_mean = df_clean[['visibility','dry_bulb_faren']].resample('W').mean()
+
+# Print the output of weekly_mean.corr()
+print(weekly_mean.corr())
+
+# Plot weekly_mean with subplots=True
+weekly_mean.plot(subplots=True)
+plt.show()
+
+
+
+# Explore and visualise fraction of sunny hours on clear days
+
+# Using df_clean, when is sky_condition 'CLR'?
+is_sky_clear = df_clean['sky_condition'] == 'CLR'
+# Resample is_sky_clear by day
+resampled = is_sky_clear.resample('D')
+# See the result
+resampled
+
+# Calculate the number of sunny hours per day
+sunny_hours = resampled.sum()
+# Calculate the number of measured hours per day
+total_hours = resampled.count()
+# Calculate the fraction of hours per day that were sunny
+sunny_fraction = sunny_hours / total_hours
+
+# Make a box plot of sunny_fraction
+sunny_fraction.plot(kind='box')
+plt.show()
+
+
+# Dew point is a measure of relative humidity based on pressure and temperature.
+# A dew point above 65 is considered uncomfortable while a temperature above 90 is also considered uncomfortable.
+
+# Resample dew_point_faren and dry_bulb_faren by Month, aggregating the maximum values: monthly_max
+monthly_max = df_clean[['dew_point_faren','dry_bulb_faren']].resample('M').max()
+# Generate a histogram with bins=8, alpha=0.5, subplots=True
+monthly_max.plot(kind='hist',bins=8,alpha=0.5,subplots=True)
+# Show the plot
+plt.show()
+
