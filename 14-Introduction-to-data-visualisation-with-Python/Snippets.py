@@ -183,11 +183,52 @@ plt.imshow(rescaled_image)
 
 plt.show()
 
+#---------------------------------------------------------------------------------------------------------
+
+# Plot graph with an inset graph
+
+# Slice aapl from Nov. 2007 to Apr. 2008 inclusive: view
+view = aapl['2007-11':'2008-04']
+
+# Plot the entire series 
+plt.plot(aapl)
+plt.xticks(rotation=45)
+plt.title('AAPL: 2001-2011')
+
+# Specify the axes
+plt.axes((0.25,0.5,0.35,0.35))
+
+# Plot the sliced series in red using the current axes
+plt.plot(view, color='red')
+plt.xticks(rotation=45)
+plt.title('2007/11-2008/04')
+plt.show()
+
+#---------------------------------------------------------------------------------------------------------
+
+## Working with images and histograms, CDFs to sharpen images
 
 
+# Load the image into an array: image
+image = plt.imread('640px-Unequalized_Hawkes_Bay_NZ.jpg')
 
+# Display image in top subplot using color map 'gray'
+plt.subplot(2,1,1)
+plt.title('Original image')
+plt.axis('off')
+plt.imshow(image,cmap='gray')
 
+# Flatten the image into 1 dimension: pixels
+pixels = image.flatten()
 
+# Display a histogram of the pixels in the bottom subplot
+plt.subplot(2,1,2)
+plt.xlim((0,255))
+plt.title('Normalized histogram')
+plt.hist(pixels, bins=64, range=(0,256), normed=True, color='red', alpha=0.4)
+
+# Display the plot
+plt.show()
 
 
 
