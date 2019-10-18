@@ -104,4 +104,95 @@ plt.ylabel('Miles per gallon [mpg]')
 plt.title('hexbin() plot')
 plt.show()
 
+#---------------------------------------------------------------------------------------------------------
+
+# Loading an image
+
+# Load the image into an array: img
+img = plt.imread('480px-Astronaut-EVA.jpg')
+
+# Display the image
+plt.imshow(img)
+
+# Hide the axes
+plt.axis('off')
+plt.show()
+
+#---------------------------------------------------------------------------------------------------------
+
+# One method for changing to 2D grayscale
+
+# Load the image into an array: img
+img = plt.imread('480px-Astronaut-EVA.jpg')
+
+# Print the shape of the image - 3D
+print(img.shape)
+
+# Compute the sum of the red, green and blue channels: intensity
+intensity = img.sum(axis=2)
+
+# Print the shape of the intensity - 2D
+print(intensity.shape)
+
+# Display the intensity with a colormap of 'gray'
+plt.imshow(intensity, cmap='gray')
+
+# Add a colorbar
+plt.colorbar()
+
+# Hide the axes and show the figure
+plt.axis('off')
+plt.show()
+
+
+#---------------------------------------------------------------------------------------------------------
+
+'''
+Rescaling pixel intensities
+
+Sometimes, low contrast images can be improved by rescaling their intensities.
+For instance, this image has no pixel values near 0 or near 255 (the limits of valid intensities).
+
+For this exercise, you will do a simple rescaling (remember, an image is NumPy array) to translate and
+stretch the pixel intensities so that the intensities of the new image fill the range from 0 to 255.
+'''
+
+# Load the image into an array: image
+image = plt.imread('640px-Unequalized_Hawkes_Bay_NZ.jpg')
+
+# Extract minimum and maximum values from the image: pmin, pmax
+pmin, pmax = image.min(), image.max()
+print("The smallest & largest pixel intensities are %d & %d." % (pmin, pmax))
+
+# Rescale the pixels: rescaled_image
+rescaled_image = 256*(image - pmin) / (pmax - pmin)
+print("The rescaled smallest & largest pixel intensities are %.1f & %.1f." % 
+      (rescaled_image.min(), rescaled_image.max()))
+
+# Display the original image in the top subplot
+plt.subplot(2,1,1)
+plt.title('original image')
+plt.axis('off')
+plt.imshow(image)
+
+# Display the rescaled image in the bottom subplot
+plt.subplot(2,1,2)
+plt.title('rescaled image')
+plt.axis('off')
+plt.imshow(rescaled_image)
+
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
